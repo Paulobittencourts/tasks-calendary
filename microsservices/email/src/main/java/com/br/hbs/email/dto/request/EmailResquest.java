@@ -1,7 +1,5 @@
-package com.br.hbs.email.dto;
+package com.br.hbs.email.dto.request;
 
-
-import com.br.hbs.email.enums.StatusEmail;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -9,20 +7,22 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class EmailResponse {
+public class EmailResquest {
 
-    private Long emailId;
+    @NotBlank
     private String ownerRef;
+    @NotBlank
+    @Email
     private String emailFrom;
+    @NotBlank
+    @Email
     private String emailTo;
+    @NotBlank
     private String subject;
+    @NotBlank
     private String text;
-    private LocalDateTime sendDateEmail;
-    private StatusEmail statusEmail;
 }
