@@ -1,7 +1,7 @@
 package com.br.hbs.email.controllers;
 
-import com.br.hbs.email.dto.EmailResponse;
-import com.br.hbs.email.dto.EmailResquest;
+import com.br.hbs.email.dto.response.EmailResponse;
+import com.br.hbs.email.dto.request.EmailResquest;
 import com.br.hbs.email.services.EmailService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;

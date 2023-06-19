@@ -1,7 +1,7 @@
 package com.br.hbs.email.services;
 
-import com.br.hbs.email.dto.EmailResponse;
-import com.br.hbs.email.dto.EmailResquest;
+import com.br.hbs.email.dto.response.EmailResponse;
+import com.br.hbs.email.dto.request.EmailResquest;
 import com.br.hbs.email.enums.StatusEmail;
 import com.br.hbs.email.model.EmailModel;
 import com.br.hbs.email.respositories.EmailRepository;
@@ -17,7 +17,6 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Service
 public class EmailService {
