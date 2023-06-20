@@ -11,9 +11,9 @@ import java.util.List;
 
 @FeignClient("tasks-ms")
 public interface TasksClient {
-    @GetMapping("/tasks/users/{id}")
+    @GetMapping("/api/tasks/users/{id}")
     List<ItemsTask> getByIDTask(@PathVariable Long id);
-    @PutMapping("/tasks/{tasksId}/status")
+    @PutMapping("/api/tasks/{tasksId}/status")
     void updatedStatus(@RequestParam String tasks, @PathVariable Long tasksId);
 
 }
