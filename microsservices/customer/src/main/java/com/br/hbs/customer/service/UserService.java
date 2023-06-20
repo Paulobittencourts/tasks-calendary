@@ -1,7 +1,8 @@
 package com.br.hbs.customer.service;
 
-import com.br.hbs.customer.dto.ItemsTask;
-import com.br.hbs.customer.dto.UserDTO;
+import com.br.hbs.customer.dto.response.ItemsTaskResponse;
+import com.br.hbs.customer.dto.request.UserRequest;
+import com.br.hbs.customer.dto.response.UserResponse;
 import com.br.hbs.customer.http.TasksClient;
 import com.br.hbs.customer.model.RolesModel;
 import com.br.hbs.customer.model.UserModel;
@@ -33,14 +34,14 @@ public class UserService {
     @Autowired
     private TasksClient client;
 
-    public Page<UserDTO> getUsers(Pageable pageable) {
-        List<UserDTO> listUser = userRepository.findAll(pageable)
+    public Page<UserResponse> getUsers(Pageable pageable) {
+        List<UserResponse> listUser = userRepository.findAll(pageable)
                 .stream()
-                .map(user -> modelMapper.map(user, UserDTO.class))
+                .map(user -> modelMapper.map(user, UserResponse.class))
                 .toList();
 
-        for(UserDTO user: listUser){
-            UserDTO usersById = getUsersById(user.getId());
+        for(UserResponse user: listUser){
+            UserResponse usersById = getUsersById(user.getId());
             listUser.stream()
                     .filter(userTasks -> userTasks.getId().equals(usersById.getId()))
                     .forEach(userTasks -> userTasks.setTasks(usersById.getTasks()));
@@ -49,32 +50,32 @@ public class UserService {
     }
 
 
-    public UserDTO getUsersById(Long id) {
+    public UserResponse getUsersById(Long id) {
         UserModel userID = userRepository.findById(id).orElseThrow(EntityExistsException::new);
-        UserDTO dto = modelMapper.map(userID, UserDTO.class);
+        UserResponse dto = modelMapper.map(userID, UserResponse.class);
         dto.setTasks(client.getByIDTask(userID.getId())
                 .stream()
-                .map(tasks -> modelMapper.map(tasks, ItemsTask.class))
+                .map(tasks -> modelMapper.map(tasks, ItemsTaskResponse.class))
                 .toList());
         return dto;
     }
 
-    public UserDTO createUsers(UserDTO userDTO) {
-        UserModel userCreate = modelMapper.map(userDTO, UserModel.class);
+    public UserResponse createUsers(UserRequest userRequest) {
+        UserModel userCreate = modelMapper.map(userRequest, UserModel.class);
         List<RolesModel> roles = rolesRepository.findAll();
-        userCreate.setPassword(passwordEncoder(userDTO.getPassword()));
+        userCreate.setPassword(passwordEncoder(userRequest.getPassword()));
         userCreate.setRoles(Collections.singletonList(roles.get(0)));
         userRepository.save(userCreate);
-        return modelMapper.map(userCreate, UserDTO.class);
+        return modelMapper.map(userCreate, UserResponse.class);
     }
 
-    public UserDTO updatedUsers(Long id, UserDTO user) {
+    public UserResponse updatedUsers(Long id, UserRequest user) {
         UserModel userUpdate = userRepository.findById(id).orElseThrow(EntityExistsException::new);
         userUpdate.setName(user.getName());
         userUpdate.setEmail(user.getEmail());
         userUpdate.setPassword(passwordEncoder(user.getPassword()));
         userRepository.save(userUpdate);
-        return modelMapper.map(userUpdate, UserDTO.class);
+        return modelMapper.map(userUpdate, UserResponse.class);
     }
 
     public void updatedStatus(String tasks, Long id){

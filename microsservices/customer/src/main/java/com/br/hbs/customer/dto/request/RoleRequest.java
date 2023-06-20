@@ -1,4 +1,4 @@
-package com.br.hbs.customer.dto;
+package com.br.hbs.customer.dto.request;
 
 import com.br.hbs.customer.enums.RoleEnum;
 import lombok.AllArgsConstructor;
@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class RoleDTO {
+public class RoleRequest {
     private Long roleId;
     private RoleEnum roleName;
 }

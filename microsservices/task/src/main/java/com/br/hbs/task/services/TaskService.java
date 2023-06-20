@@ -1,6 +1,7 @@
 package com.br.hbs.task.services;
 
-import com.br.hbs.task.dto.TasksDTO;
+import com.br.hbs.task.dto.request.TasksRequest;
+import com.br.hbs.task.dto.response.TasksResponse;
 import com.br.hbs.task.enums.StatusTask;
 import com.br.hbs.task.model.TasksModel;
 import com.br.hbs.task.respositories.TaskRepository;
@@ -25,29 +26,29 @@ public class TaskService {
     @Autowired
     private final ModelMapper modelMapper;
 
-    public Page<TasksDTO> getAllTask(Pageable pageable) {
+    public Page<TasksResponse> getAllTask(Pageable pageable) {
 
-        List<TasksDTO> getTasks = taskRepository.findAll(pageable)
+        List<TasksResponse> getTasks = taskRepository.findAll(pageable)
                 .stream()
-                .map(tasks -> modelMapper.map(tasks, TasksDTO.class))
+                .map(tasks -> modelMapper.map(tasks, TasksResponse.class))
                 .toList();
 
         return new PageImpl<>(getTasks);
     }
 
-    public TasksDTO getTasksByID(Long id) {
+    public TasksResponse getTasksByID(Long id) {
         TasksModel tasksID = taskRepository.findById(id)
                 .orElseThrow(EntityExistsException::new);
-        return modelMapper.map(tasksID, TasksDTO.class);
+        return modelMapper.map(tasksID, TasksResponse.class);
     }
 
-    public void createTasks(TasksDTO tasks, Long id) {
+    public void createTasks(TasksRequest tasks, Long id) {
         TasksModel createTasks = modelMapper.map(tasks, TasksModel.class);
         createTasks.setUser(id);
         taskRepository.save(createTasks);
     }
 
-    public void updatedTasks(TasksDTO tasks, Long id) {
+    public void updatedTasks(TasksRequest tasks, Long id) {
         TasksModel tasksID = taskRepository.findById(id)
                 .orElseThrow(EntityExistsException::new);
         tasksID.setNameTask(tasks.getNameTask());
@@ -64,10 +65,10 @@ public class TaskService {
         taskRepository.save(tasksID);
     }
 
-    public List<TasksDTO> getTasksIDUser(Long id) {
+    public List<TasksResponse> getTasksIDUser(Long id) {
         return taskRepository.findByUser(id)
                 .stream()
-                .map(tasks -> modelMapper.map(tasks, TasksDTO.class))
+                .map(tasks -> modelMapper.map(tasks, TasksResponse.class))
                 .toList();
     }
 

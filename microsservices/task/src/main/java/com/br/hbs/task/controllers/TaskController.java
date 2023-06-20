@@ -1,7 +1,7 @@
 package com.br.hbs.task.controllers;
 
-import com.br.hbs.task.dto.TasksDTO;
-import com.br.hbs.task.enums.StatusTask;
+import com.br.hbs.task.dto.request.TasksRequest;
+import com.br.hbs.task.dto.response.TasksResponse;
 import com.br.hbs.task.services.TaskService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -23,23 +23,23 @@ public class TaskController {
     @Autowired
     private TaskService taskService;
 
-    @GetMapping
-    public Page<TasksDTO> getTasks(@PageableDefault(page = 0, size = 5) Pageable pageable){
+    @GetMapping("/tasks")
+    public Page<TasksResponse> getTasks(@PageableDefault(page = 0, size = 5) Pageable pageable){
         return taskService.getAllTask(pageable);
     }
 
     @GetMapping("/tasks/{tasksId}")
-    public TasksDTO getTasksID(@PathVariable @Valid @NotNull Long tasksId){
+    public TasksResponse getTasksID(@PathVariable @Valid @NotNull Long tasksId){
         return taskService.getTasksByID(tasksId);
     }
 
     @GetMapping("/tasks/users/{id}")
-    public List<TasksDTO> getTasksIDUser(@PathVariable Long id){
+    public List<TasksResponse> getTasksIDUser(@PathVariable Long id){
         return taskService.getTasksIDUser(id);
     }
 
     @PostMapping("/tasks/{userId}")
-    public ResponseEntity<Object> creatingTasks(@RequestBody @Valid @NotNull TasksDTO tasks, @PathVariable Long userId){
+    public ResponseEntity<Object> creatingTasks(@RequestBody @Valid @NotNull TasksRequest tasks, @PathVariable Long userId){
         if (taskService.isDateValid(tasks.getDateTask())){
             throw new DateTimeException("Date cannot be less than current");
         }
@@ -48,7 +48,7 @@ public class TaskController {
     }
 
     @PutMapping("/tasks/{tasksId}")
-    public ResponseEntity<Object> updatingTasks(@RequestBody @Valid @NotNull TasksDTO tasks, @PathVariable Long tasksId){
+    public ResponseEntity<Object> updatingTasks(@RequestBody @Valid @NotNull TasksRequest tasks, @PathVariable Long tasksId){
         taskService.updatedTasks(tasks, tasksId);
         return ResponseEntity.ok().body("Updating with success");
     }
