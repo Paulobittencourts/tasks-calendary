@@ -17,7 +17,7 @@ import java.time.DateTimeException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/tasks")
+@RequestMapping("/api")
 public class TaskController {
 
     @Autowired
@@ -28,17 +28,17 @@ public class TaskController {
         return taskService.getAllTask(pageable);
     }
 
-    @GetMapping("/{tasksId}")
+    @GetMapping("/tasks/{tasksId}")
     public TasksDTO getTasksID(@PathVariable @Valid @NotNull Long tasksId){
         return taskService.getTasksByID(tasksId);
     }
 
-    @GetMapping("/users/{id}")
+    @GetMapping("/tasks/users/{id}")
     public List<TasksDTO> getTasksIDUser(@PathVariable Long id){
         return taskService.getTasksIDUser(id);
     }
 
-    @PostMapping("/{userId}")
+    @PostMapping("/tasks/{userId}")
     public ResponseEntity<Object> creatingTasks(@RequestBody @Valid @NotNull TasksDTO tasks, @PathVariable Long userId){
         if (taskService.isDateValid(tasks.getDateTask())){
             throw new DateTimeException("Date cannot be less than current");
@@ -47,19 +47,19 @@ public class TaskController {
         return ResponseEntity.ok().body("Creating with success");
     }
 
-    @PutMapping("/{tasksId}")
+    @PutMapping("/tasks/{tasksId}")
     public ResponseEntity<Object> updatingTasks(@RequestBody @Valid @NotNull TasksDTO tasks, @PathVariable Long tasksId){
         taskService.updatedTasks(tasks, tasksId);
         return ResponseEntity.ok().body("Updating with success");
     }
 
-    @PutMapping("/{tasksId}/status")
+    @PutMapping("/tasks/{tasksId}/status")
     public ResponseEntity<Object> updatingStatusTasks(@RequestParam String tasks , @PathVariable Long tasksId){
         taskService.updatedStatus(tasksId, tasks);
         return ResponseEntity.ok().body("Updating with success");
     }
 
-    @DeleteMapping("/{tasksId}")
+    @DeleteMapping("/tasks/{tasksId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteTasks(@PathVariable @Valid Long tasksId){
         taskService.deleteTask(tasksId);
