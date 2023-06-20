@@ -1,6 +1,7 @@
 package com.br.hbs.customer.controllers;
 
-import com.br.hbs.customer.dto.UserDTO;
+import com.br.hbs.customer.dto.request.UserRequest;
+import com.br.hbs.customer.dto.response.UserResponse;
 import com.br.hbs.customer.service.UserService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -25,19 +26,19 @@ public class UserController {
 
     @GetMapping("/users")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public Page<UserDTO> getAll(@PageableDefault(size = 5) Pageable pageable) {
+    public Page<UserResponse> getAll(@PageableDefault(size = 5) Pageable pageable) {
         return userService.getUsers(pageable);
     }
 
     @GetMapping("/users/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public UserDTO getByID(@PathVariable @Valid Long id) {
+    public UserResponse getByID(@PathVariable @Valid Long id) {
         return userService.getUsersById(id);
     }
 
     @PostMapping("/users")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Object> createUsers(@RequestBody @Valid @NotNull UserDTO dto){
+    public ResponseEntity<Object> createUsers(@RequestBody @Valid @NotNull UserRequest dto){
         if(userService.existsUsername(dto.getUsername())){
             throw new DataIntegrityViolationException("The username already exists: " + dto.getUsername());
         }
@@ -57,14 +58,14 @@ public class UserController {
 
     @PutMapping("/users/{id}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
-    public ResponseEntity<Object> updateUsers(@RequestBody @Valid @NotNull UserDTO dto, @PathVariable Long id) {
+    public ResponseEntity<Object> updateUsers(@RequestBody @Valid @NotNull UserRequest dto, @PathVariable Long id) {
         if(userService.existsUsername(dto.getUsername())){
             throw new DataIntegrityViolationException("The username already exists: " + dto.getUsername());
         }
         if (userService.existsEmail(dto.getEmail())){
             throw new DataIntegrityViolationException("The email already exists: " + dto.getEmail());
         }
-        UserDTO userUpdated = userService.updatedUsers(id, dto);
+        UserResponse userUpdated = userService.updatedUsers(id, dto);
         return ResponseEntity.ok(userUpdated);
     }
 

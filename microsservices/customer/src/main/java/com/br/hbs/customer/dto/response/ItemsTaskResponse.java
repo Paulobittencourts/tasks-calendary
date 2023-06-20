@@ -1,8 +1,5 @@
-package com.br.hbs.task.dto;
+package com.br.hbs.customer.dto.response;
 
-
-import com.br.hbs.task.enums.PriorityTask;
-import com.br.hbs.task.enums.StatusTask;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,13 +12,13 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TasksDTO {
+public class ItemsTaskResponse {
 
     private Long id;
     private String nameTask;
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
     private LocalDate dateTask;
-    private StatusTask statusTask;
-    private PriorityTask priorityTask;
+    private String statusTask;
+    private String priorityTask;
     private Long user;
 }
