@@ -1,0 +1,111 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Poppins:ital,wght@0,600;1,600&display=swap');
+
+body{
+    background-color: #eae9e9;
+    margin: 0;
+    padding: 0;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+}
+.navbar{
+    margin: 0 auto;
+    max-width: 600px;
+}
+.navbar-table{
+    border: 0;
+    width: 100%;
+}
+.navbar-table td{
+    border-bottom: #79daef solid 5px;
+    direction: ltr;
+    padding: 20px 0;
+    text-align: center;
+    vertical-align: top;
+}
+.menu{
+    background-color: #fff;
+    margin: auto;
+    max-width: 600px;
+}
+.menu-table{
+    background-color: #fff;
+    width: 100%;
+    border: #dddddd solid 2px;
+    border-top: 1px;
+    direction: ltr;
+    font-size: 0;
+    padding: 20px 0;
+    text-align: center;
+    vertical-align: top;
+}
+.menu-line{
+    font-size: 13px;
+    text-align: left;
+    direction: ltr;
+    display: inline-block;
+    vertical-align: bottom;
+    width: 100%;
+}
+.menu-line-table{
+    border: none;
+    vertical-align: bottom;
+    width: 100%;
+}
+.line-table{
+    display: flex;
+    justify-content: center;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+.line-table td{
+    border: none;
+}
+.img-welcome{
+    display: block;
+    outline: none;
+    text-decoration: none;
+    width: 100%;
+}
+.text-name{
+    font-family: 'Anton','Poppins', sans-serif;
+    font-size: 20px;
+    line-height: 1;
+    text-align: center;
+    color: #555;
+    padding: 10px 25px;
+    word-break: break-word;
+    margin: 10px;
+}
+.text-welcome{
+    font-family: 'Anton','Poppins', sans-serif;
+    font-size: 16px;
+    line-height: 22px;
+    text-align: left;
+    color: #555;
+    padding: 10px 25px;
+    word-break: break-word;
+    margin: 10px;
+}
+.login-button{
+    display: flex;
+    justify-items: center;
+    justify-content: center;
+    font-size: 0;
+    padding: 15px 25px;
+    word-break: break-word;
+
+}
+.text-login button{
+    background-color: #2F67F6;
+    color: #FFF;
+    font-family: 'Anton','Poppins', sans-serif;
+    font-size: 15px;
+    font-weight: normal;
+    text-decoration: none;
+    text-transform: none;
+    border-radius: 5px;
+    padding: 10px;
+    border: 0;
+    cursor: pointer;
+    line-height: 100%;
+}
